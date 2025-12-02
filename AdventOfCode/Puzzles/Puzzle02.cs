@@ -64,7 +64,7 @@ public class Puzzle02 : Puzzle<string, long>
         }
         
         var half = s.Length / 2;
-        for (int i = 0; i < half; i++)
+        for (var i = 0; i < half; i++)
         {
             var fromStart = i;
             var fromMid = i + half;
@@ -82,7 +82,37 @@ public class Puzzle02 : Puzzle<string, long>
         // An ID is invalid if it is made only of some sequence of digits repeated at least twice.
         // So, 12341234 (1234 two times), 123123123 (123 three times), 1212121212 (12 five times),
         // and 1111111 (1 seven times) are all invalid IDs.
-        throw new NotImplementedException();
+        var s = l.ToString();
+        var half = s.Length / 2;
+
+        for (var i = 0; i < half; i++)
+        {
+            var candidateLength = i + 1;
+            if (s.Length % candidateLength != 0)
+            {
+                continue;
+            }
+
+            var candidate = s[..candidateLength];
+            var candidateLimit = s.Length - candidate.Length;
+            var isInvalid = true;
+            for (var j = candidateLength; j <= candidateLimit; j += candidateLength)
+            {
+                var nextCandidate = s[j..(j+candidateLength)];
+                if (nextCandidate != candidate)
+                {
+                    isInvalid = false;
+                    break;
+                }
+            }
+
+            if (isInvalid)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected internal override string ParseInput(string inputItem)

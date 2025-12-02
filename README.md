@@ -59,4 +59,4 @@ Missing solutions and suggestions for improvements, for when time might be avail
 
 ## Puzzles
 
-- ...
+- Puzzle 2: room for optimization here, particularly on part 2

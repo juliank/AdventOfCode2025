@@ -9,18 +9,18 @@ public class Puzzle02Tests
         _puzzle = new Puzzle02();
     }
 
-    // [Fact(Skip = "Not yet implemented")]
+    [Fact]
     public void SolvePart1()
     {
         var result = _puzzle.SolvePart1();
-        result.Should().Be(0);
+        result.Should().Be(28146997880);
     }
 
-    // [Fact(Skip = "Not yet implemented")]
+    [Fact]
     public void SolvePart2()
     {
         var result = _puzzle.SolvePart2();
-        result.Should().Be(0);
+        result.Should().Be(40028128307);
     }
 
     [Theory]
@@ -28,9 +28,39 @@ public class Puzzle02Tests
     [InlineData(11, true)]
     [InlineData(1010, true)]
     [InlineData(1001, false)]
-    public void TestIsInvalid(long l, bool isInvalid)
+    [InlineData(101010, false)]
+    public void TestIsInvalid1(long l, bool isInvalid)
     {
         Puzzle02.IsInvalidPart1(l).Should().Be(isInvalid);
+    }
+
+    [Theory]
+    [InlineData(1, false)]
+    [InlineData(11, true)]
+    [InlineData(1010, true)]
+    [InlineData(1001, false)]
+    [InlineData(101010, true)]
+    [InlineData(12341234, true)]
+    [InlineData(123123123, true)]
+    [InlineData(1212121212, true)]
+    [InlineData(1111111, true)]
+    [InlineData(110, false)]
+    public void TestIsInvalid2(long l, bool isInvalid)
+    {
+        Puzzle02.IsInvalidPart2(l).Should().Be(isInvalid);
+    }
+    
+    [Theory]
+    [InlineData(11, 22, 11, 22)]
+    [InlineData(99, 115, 99, 111)]
+    public void TestIsInvalid2ForRange(int lower, int upper, params int[] invalidIds)
+    {
+        for (var i = lower; i <= upper; i++)
+        {
+            var isInvalid = invalidIds.Contains(i);
+            var result = isInvalid ? "invalid" : "valid";
+            Puzzle02.IsInvalidPart2(i).Should().Be(isInvalid, $"{i} should be {result}");
+        }
     }
 
     [Fact]
