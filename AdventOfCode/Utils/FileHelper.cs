@@ -9,7 +9,7 @@ public static class FileHelper
 
     public static string GetInputFilePath(int puzzleId)
     {
-        var assemblyLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
+        var assemblyLocation = AppContext.BaseDirectory;
         // We're currently in [ProjectPath]\bin\[Debug|Release]\netN.0
         var solutionDirectory = Path.Combine(assemblyLocation!, @"..\..\..\..\");
         var solutionName = new DirectoryInfo(solutionDirectory).Name;
