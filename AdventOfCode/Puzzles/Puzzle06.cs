@@ -10,6 +10,21 @@ public class Puzzle06 : Puzzle<string[], long>
 
     public override long SolvePart1()
     {
+        return CalculateGrandTotal(ParseInputPart1);
+    }
+
+    private static IEnumerable<long> ParseInputPart1(IEnumerable<string> problemInput)
+    {
+        return problemInput.Select(long.Parse);
+    }
+
+    public override long SolvePart2()
+    {
+        throw new NotImplementedException();
+    }
+
+    private long CalculateGrandTotal(Func<IEnumerable<string>, IEnumerable<long>> parseInput)
+    {
         var grandTotal = 0L;
 
         var problemInputCount = InputEntries.Count - 1;
@@ -18,29 +33,24 @@ public class Puzzle06 : Puzzle<string[], long>
             var problemOperator = InputEntries[problemInputCount][i]; // The operator is the last row of input items
             var problemInput = InputEntries
                 .Select(row => row[i])
-                .Take(problemInputCount)
-                .Select(long.Parse)
+                .Take(problemInputCount);
+            var parsedInput = parseInput(problemInput)
                 .ToArray();
             
             long problemTotal;
             if (problemOperator == "+")
             {
-                problemTotal = problemInput.Sum();
+                problemTotal = parsedInput.Sum();
             }
             else // Operator is "*"
             {
-                problemTotal = problemInput.Aggregate(1L, (product, currentInput) => product * currentInput);
+                problemTotal = parsedInput.Aggregate(1L, (product, currentInput) => product * currentInput);
             }
             
             grandTotal += problemTotal;
         }
 
         return grandTotal;
-    }
-
-    public override long SolvePart2()
-    {
-        throw new NotImplementedException();
     }
 
     protected internal override string[] ParseInput(string inputItem)
