@@ -14,12 +14,8 @@ public class Puzzle07 : Puzzle<string, long>
         InputEntries[0] = InputEntries[0].Replace('S', '|');
         
         var splitCount = 0L;
-        var repeatRow = false; // If a beam has hit a splitter, we must repeat the row to process the newly split beams
         for (var y = 0; y < Boundary.MaxY; y++)
         {
-            var secondTraversal = repeatRow;
-            repeatRow = false;
-            
             for (var x = 0; x < Boundary.MaxX; x++)
             {
                 var point = new Point(x, y);
@@ -35,23 +31,17 @@ public class Puzzle07 : Puzzle<string, long>
                         }
                         else if (InputMap[down] == '^')
                         {
-                            // Beam hits a splitter. We use 'x' to indicate an "activated" splitter
-                            InputMap[down] = 'x';
-                        }
-                    }
-                }
-                else if (InputMap[point] == 'x' && !secondTraversal)
-                {
-                    splitCount++;
-                    repeatRow = true;
-                    
-                    var left = point.Get(Direction.SW);
-                    var right = point.Get(Direction.SE);
-                    foreach (var nextPoint in new [] { left, right })
-                    {
-                        if (nextPoint.IsWithin(Boundary) && InputMap[nextPoint] == '.')
-                        {
-                            InputMap[nextPoint] = '|';
+                            // Beam hits a splitter: add a beam to both sides of the splitter
+                            splitCount++;
+                            var left = point.Get(Direction.SW);
+                            var right = point.Get(Direction.SE);
+                            foreach (var nextPoint in new [] { left, right })
+                            {
+                                if (nextPoint.IsWithin(Boundary) && InputMap[nextPoint] == '.')
+                                {
+                                    InputMap[nextPoint] = '|';
+                                }
+                            }
                         }
                     }
                 }
