@@ -202,6 +202,11 @@ public abstract class Puzzle<TInput, TResult>(int id) : IPuzzle
 
     private string[]? _testInput;
 
+    internal void SetTestInput(string testInput)
+    {
+        SetTestInput(testInput.Split(Environment.NewLine));
+    }
+
     internal void SetTestInput(params IEnumerable<string> testInput)
     {
         _inputEntries = null; // Must clear, in case the has been set using the alternate constructor

@@ -35,6 +35,19 @@ public class Puzzle06Tests
         var result = puzzle.SolvePart1();
         result.Should().Be(4277556);
     }
+
+    [Fact]
+    public void TestPart2WithExampleInput()
+    {
+        _puzzle.SetTestInput("""
+                             123 328  51 64 
+                              45 64  387 23 
+                               6 98  215 314
+                             *   +   *   +  
+                             """);
+        var result = _puzzle.SolvePart2();
+        result.Should().Be(3263827);
+    }
     
     // 123 328  51 64 
     //  45 64  387 23 
