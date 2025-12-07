@@ -60,3 +60,4 @@ Missing solutions and suggestions for improvements, for when time might be avail
 ## Puzzles
 
 - Puzzle 2: room for optimization here, particularly on part 2
+- Puzzle 7: wrong answer for part 2, even wrong for example input
