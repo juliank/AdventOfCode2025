@@ -65,7 +65,7 @@ public abstract class Puzzle<TInput, TResult>(int id) : IPuzzle
             if (_inputMap.Count == 0)
             {
                 // Touching input map, to get both the type check and loading of the map
-                var _ = InputMap;
+                _ = InputMap;
             }
             return field;
         }
