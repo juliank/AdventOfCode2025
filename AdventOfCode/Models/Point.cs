@@ -132,4 +132,12 @@ public readonly record struct Point(int X, int Y, int Z = 0)
     {
         return Math.Abs(X - point.X) + Math.Abs(Y - point.Y) + Math.Abs(Z - point.Z);
     }
+
+    public float EuclideanDistanceTo(Point point)
+    {
+        var v1 = new Vector3(X, Y, Z);
+        var v2 = new Vector3(point.X, point.Y, point.Z);
+        var distance = Vector3.Distance(v1, v2);
+        return distance;
+    }
 }
