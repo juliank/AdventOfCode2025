@@ -39,4 +39,23 @@ public class Puzzle09Tests
         var result = _puzzle.SolvePart1();
         result.Should().Be(50);
     }
+
+    [Fact]
+    public void TestPart2WithExampleInput()
+    {
+        _puzzle.IsRunningFromTest = true; // Enables debug output
+        _puzzle.SetTestInput("""
+                             7,1
+                             11,1
+                             11,7
+                             9,7
+                             9,5
+                             2,5
+                             2,3
+                             7,3
+                             """);
+        var result = _puzzle.SolvePart2();
+        // Expected result to be 24L, but found 18L (difference of -6).
+        result.Should().Be(24);
+    }
 }
