@@ -76,21 +76,22 @@ public class Puzzle09 : Puzzle<Point, long>
             border.MinBy(p => p.X).X - 1, border.MinBy(p => p.Y).Y - 1,
             border.MaxBy(p => p.X).X + 1, border.MaxBy(p => p.Y).Y + 1);
         
-        for (var firstPoint = 0; firstPoint < InputEntries.Count; firstPoint++)
+        for (var firstPoint = 0; firstPoint < border.Count; firstPoint++)
         {
-            for (var secondPoint = firstPoint + 1; secondPoint < InputEntries.Count; secondPoint++)
+            for (var secondPoint = firstPoint + 1; secondPoint < border.Count; secondPoint++)
             {
-                var pointA = InputEntries[firstPoint];
-                var pointB = InputEntries[secondPoint];
+                var pointA = border[firstPoint];
+                var pointB = border[secondPoint];
                 
                 if (IsRunningFromTest)
                 {
                     IEnumerable<(Point P, char C)> points = border.Select(p =>
                     {
-                        char c = p == pointA ? 'A' : (p == pointB ? 'B' : '.');
+                        var c = p == pointA ? 'A' : (p == pointB ? 'B' : '.');
                         return (p, c);
                     });
-                    Console.WriteLine($"\nChecking if both A ({pointA}) and B ({pointB}) are within the boundary");
+                    var a = CalculateArea(pointA, pointB);
+                    Console.WriteLine($"\nArea: {a} - Checking if both A ({pointA}) and B ({pointB}) are within the boundary");
                     Helper.PrintMap(boundary, points, printBorder: true);
                 }
                 
@@ -98,9 +99,7 @@ public class Puzzle09 : Puzzle<Point, long>
                 {
                     continue;
                 }
-                var length = Math.Abs(pointA.X - pointB.X) + 1;
-                var width = Math.Abs(pointA.Y - pointB.Y) + 1;
-                var area = (long)length * width;
+                var area = CalculateArea(pointA, pointB);
                 maxArea = Math.Max(maxArea, area);
             }
         }
@@ -146,6 +145,14 @@ public class Puzzle09 : Puzzle<Point, long>
 
             return true;
         }
+    }
+
+    private static long CalculateArea(Point pointA, Point pointB)
+    {
+        var length = Math.Abs(pointA.X - pointB.X) + 1;
+        var width = Math.Abs(pointA.Y - pointB.Y) + 1;
+        var area = (long)length * width;
+        return area;
     }
 
     protected internal override Point ParseInput(string inputItem)

@@ -55,7 +55,7 @@ public class Puzzle09Tests
                              7,3
                              """);
         var result = _puzzle.SolvePart2();
-        // Expected result to be 24L, but found 18L (difference of -6).
+        // Expected result to be 24L, but found 25L (difference of 1).
         result.Should().Be(24);
     }
 }
