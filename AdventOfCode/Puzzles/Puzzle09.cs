@@ -70,14 +70,14 @@ public class Puzzle09 : Puzzle<Point, long>
 
         // Make the initial hash set as large as possible, since reallocations when we hit the current max size
         // will be expensive. And with the real data set, if starting from zero, this would happen a lot!
-        var xSize = (long)maxX - minX;
-        var ySize = maxY - minY;
-        var maxSize = xSize * ySize;
+        // var xSize = (long)maxX - minX;
+        // var ySize = maxY - minY;
+        // var maxSize = xSize * ySize;
         // The real input will yield a theoretical max size much larger than int.MaxValue, but for when running
         // tests we keep this as small as possible
-        var size = maxSize > int.MaxValue ? int.MaxValue : (int)maxSize;
+        // var size = maxSize > int.MaxValue ? int.MaxValue : (int)maxSize;
         // var availableArea = new HashSet<Point>(size);
-        var availableArea = new HashSet<Point>();
+        var availableArea = new BigBitArray(minX, minY, maxX, maxY);
         
         // Just for debugging
         var boundary = new Boundary(minX - 1, minY - 1, maxX + 1, maxY + 1);
@@ -108,7 +108,7 @@ public class Puzzle09 : Puzzle<Point, long>
                 if (inside && !border.Contains(current))
                 {
                     // We're already inside, and not crossing/touching the border, so we're still inside
-                    availableArea.Add(current);
+                    availableArea.Set(current.X, current.Y);
                     continue;
                 }
 
@@ -120,7 +120,7 @@ public class Puzzle09 : Puzzle<Point, long>
                 if (inside && border.Contains(current))
                 {
                     // We're either traversing the border or about to enter the border from within
-                    availableArea.Add(current);
+                    availableArea.Set(current.X, current.Y);
                     
                     if (border.Contains(north) && border.Contains(south))
                     {
@@ -198,7 +198,7 @@ public class Puzzle09 : Puzzle<Point, long>
                     // We're about to enter the border from the outside
                     enteringFromOutside = true;
                     inside = true;
-                    availableArea.Add(current);
+                    availableArea.Set(current.X, current.Y);
                     
                     if (border.Contains(north) && border.Contains(south))
                     {
@@ -231,9 +231,10 @@ public class Puzzle09 : Puzzle<Point, long>
             }
         }
 
+        Console.WriteLine($"Done building bitmap. Set called {availableArea.SetCount} times");
         if (IsRunningFromTest)
         {
-            Helper.PrintMap(boundary, availableArea, c: '.', printBorder: true);
+            // Helper.PrintMap(boundary, availableArea, c: '.', printBorder: true);
         }
         
         // We'll go through row by row and all points that are within (or on) the border to the set of available points
@@ -279,12 +280,14 @@ public class Puzzle09 : Puzzle<Point, long>
             for (var x = a.X; x != b.X; x += increment)
             {
                 var pointOnLineFromA = new Point(x, a.Y);
-                if (!availableArea.Contains(pointOnLineFromA))
+                // if (!availableArea.Contains(pointOnLineFromA))
+                if (!availableArea.Contains(pointOnLineFromA.X, pointOnLineFromA.Y))
                 {
                     return false;
                 }
                 var pointOnLineToB = new Point(x, b.Y);
-                if (!availableArea.Contains(pointOnLineToB))
+                // if (!availableArea.Contains(pointOnLineToB))
+                if (!availableArea.Contains(pointOnLineToB.X, pointOnLineToB.Y))
                 {
                     return false;
                 }
@@ -294,12 +297,14 @@ public class Puzzle09 : Puzzle<Point, long>
             for (var y = a.Y; y != b.Y; y += increment)
             {
                 var pointOnLineFromA = new Point(a.X, y);
-                if (!availableArea.Contains(pointOnLineFromA))
+                // if (!availableArea.Contains(pointOnLineFromA))
+                if (!availableArea.Contains(pointOnLineFromA.X, pointOnLineFromA.Y))
                 {
                     return false;
                 }
                 var pointOnLineToB = new Point(b.X, y);
-                if (!availableArea.Contains(pointOnLineToB))
+                // if (!availableArea.Contains(pointOnLineToB))
+                if (!availableArea.Contains(pointOnLineToB.X, pointOnLineToB.Y))
                 {
                     return false;
                 }
