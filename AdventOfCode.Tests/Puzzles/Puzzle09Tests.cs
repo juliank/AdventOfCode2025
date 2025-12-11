@@ -17,10 +17,12 @@ public class Puzzle09Tests
     }
 
     // [Fact(Skip = "Not yet implemented")]
+    [Fact]
     public void SolvePart2()
     {
+        _puzzle.IsRunningFromTest = true;
         var result = _puzzle.SolvePart2();
-        result.Should().Be(0);
+        result.Should().BeGreaterThan(0);
     }
 
     [Fact]
@@ -55,7 +57,6 @@ public class Puzzle09Tests
                              7,3
                              """);
         var result = _puzzle.SolvePart2();
-        // Expected result to be 24L, but found 25L (difference of 1).
         result.Should().Be(24);
     }
 }
