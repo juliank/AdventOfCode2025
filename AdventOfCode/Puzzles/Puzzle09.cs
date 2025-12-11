@@ -76,12 +76,16 @@ public class Puzzle09 : Puzzle<Point, long>
             border.MinBy(p => p.X).X - 1, border.MinBy(p => p.Y).Y - 1,
             border.MaxBy(p => p.X).X + 1, border.MaxBy(p => p.Y).Y + 1);
         
-        for (var firstPoint = 0; firstPoint < border.Count; firstPoint++)
+        // for (var firstPoint = 0; firstPoint < border.Count; firstPoint++)
+        for (var firstPoint = 0; firstPoint < InputEntries.Count; firstPoint++)
         {
-            for (var secondPoint = firstPoint + 1; secondPoint < border.Count; secondPoint++)
+            // for (var secondPoint = firstPoint + 1; secondPoint < border.Count; secondPoint++)
+            for (var secondPoint = firstPoint + 1; secondPoint < InputEntries.Count; secondPoint++)
             {
-                var pointA = border[firstPoint];
-                var pointB = border[secondPoint];
+                // var pointA = border[firstPoint];
+                // var pointB = border[secondPoint];
+                var pointA = InputEntries[firstPoint];
+                var pointB = InputEntries[secondPoint];
                 
                 if (IsRunningFromTest)
                 {
