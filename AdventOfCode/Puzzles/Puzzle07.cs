@@ -61,7 +61,7 @@ public class Puzzle07 : Puzzle<string, long>
         var firstTimelineInitialized = false;
         for (var y = 0; y < Boundary.MaxY; y++)
         {
-            for (var x = 0; x < Boundary.MaxX; x++)
+            for (var x = 0; x <= Boundary.MaxX; x++)
             {
                 var point = new Point(x, y);
                 if (InputMap[point] == '|')
@@ -74,7 +74,7 @@ public class Puzzle07 : Puzzle<string, long>
                     var down = point.Get(Direction.S);
                     if (point.IsWithin(Boundary))
                     {
-                        if (InputMap[down] == '.')
+                        if (InputMap[down] is '.' or '|')
                         {
                             // Beam hits an empty space, the beam will continue
                             InputMap[down] = '|';
@@ -116,6 +116,13 @@ public class Puzzle07 : Puzzle<string, long>
                 var rowString = string.Join("", rowElements);
                 Console.WriteLine(rowString);
             }
+        }
+
+        if (IsRunningFromTest)
+        {
+            var v = InputMap.Select(kvp => (kvp.Key, kvp.Value));
+            Console.WriteLine();
+            Helper.PrintMap(Boundary, v);
         }
 
         var finalRow = timelines.Where(kvp => kvp.Key.Y == Boundary.MaxY!);
