@@ -16,11 +16,9 @@ public class Puzzle09Tests
         result.Should().Be(4759420470);
     }
 
-    // [Fact(Skip = "Not yet implemented")]
     [Fact]
     public void SolvePart2()
     {
-        _puzzle.IsRunningFromTest = true;
         var result = _puzzle.SolvePart2();
         result.Should().Be(1603439684);
     }
@@ -28,6 +26,7 @@ public class Puzzle09Tests
     [Fact]
     public void TestPart1WithExampleInput()
     {
+        // _puzzle.IsRunningFromTest = true; // Enables debug output
         _puzzle.SetTestInput("""
                              7,1
                              11,1
@@ -45,7 +44,7 @@ public class Puzzle09Tests
     [Fact]
     public void TestPart2WithExampleInput()
     {
-        _puzzle.IsRunningFromTest = true; // Enables debug output
+        // _puzzle.IsRunningFromTest = true; // Enables debug output
         _puzzle.SetTestInput("""
                              7,1
                              11,1

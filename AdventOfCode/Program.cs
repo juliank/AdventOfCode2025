@@ -41,7 +41,7 @@ void SolvePuzzle(int pid)
     }
     var puzzle = (IPuzzle)Activator.CreateInstance(puzzleType)!;
 
-    WriteLine($"Preparing to solve puzzle {pid}...");
+    WriteLine($@"{DateTime.Now.TimeOfDay:hh\:mm\:ss}: Preparing to solve puzzle {pid}...");
     WriteLine();
 
     var result = puzzle.Solve();
@@ -54,7 +54,7 @@ void SolveAllPuzzles()
     Stopwatch sw;
     foreach (var puzzleType in puzzleTypes)
     {
-        WriteLine($"Solving puzzle {puzzleType.Id}...");
+        WriteLine($@"{DateTime.Now.TimeOfDay:hh\:mm\:ss}: Solving puzzle {puzzleType.Id}...");
 
         try
         {

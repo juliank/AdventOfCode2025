@@ -28,8 +28,8 @@ public class Puzzle09 : Puzzle<Point, long>
 
     public override long SolvePart2()
     {
-        // throw new HardCodedResultException(1603439684, "Solution time: 00:06:32.8642290"); // Running in release mode, consuming 9 GB memory
-        _logProgress = true;
+        ThrowHardCodedResult(1603439684, "Solution time: 00:06:32.8642290, consuming  GB memory");
+        // _logProgress = true;
         var redTiles = InputEntries;
         var borderList = new List<(int X, int Y)>();
         
@@ -112,48 +112,14 @@ public class Puzzle09 : Puzzle<Point, long>
                     continue;
                 }
                 
-                // The opposite of one above and two to the left
+                // We're left with one of the four following scenarios:
+                //
+                // . . .          . . .          * * *          * * *
+                // . ---          . ---          * ---          * ---
+                // . | ?          --| ?          * | ?          --| ?
+                //
+                // The current will have the opposite value of the one two to the left on the above row (-2,-1)
                 greenTiles[y][x] = !greenTiles[y - 1][x - 2];
-                
-                
-                // if (border.Contains(((y - 1), (x - 1))) && border.Contains(((y + 1), (x - 1))))
-                // {
-                //     // We've just crossed a vertical border: this tile is also green (as the one above)
-                //     //  . | * 
-                //     //  . | ? 
-                //     //  . | 
-                //     greenTiles[y][x] = true;
-                //     continue;
-                // }
-                //
-                // if (border.Contains(((y), (x - 2))) &&
-                //     (border.Contains(((y - 1), (x - 1))) || border.Contains(((y + 1), (x - 1)))))
-                // {
-                //     //  . | *    OR   //  * * *
-                //     //  --| ?         //  --| ?
-                //     //  . .           //  . |
-                //     greenTiles[y][x] = true;
-                //     continue;
-                // }
-                //
-                // // The tile above and to the left of the previous is green: this one is not
-                // if (greenTiles[y - 1][x - 2])
-                // {
-                //     // Current tile is ? - other tiles are either on the border (| or -) or inside (*) - all of which are green
-                //     //  * * *
-                //     //  * |--
-                //     //  * | ?
-                //     continue;
-                // }
-                //
-                // if (border.Contains(((y - 1), (x))))
-                // {
-                //     // We're in a corner with the border above and to the left: this tile will be
-                //     // the opposite of the tile above and two to the left
-                //     //  . |--    OR     * |-- 
-                //     //  --| ?           --| ?  
-                //     greenTiles[y][x] = !greenTiles[y - 1][x - 2];
-                // }
                 
             }
             // end for x
@@ -162,15 +128,15 @@ public class Puzzle09 : Puzzle<Point, long>
         
         var maxArea = 0L;
         
-        // Just for debugging
+        // The below variables are just for debugging
         var boundary = new Boundary(minX - 1, minY - 1, maxX + 1, maxY + 1);
-        
-        // We'll go through all possible rectangles formed by two red tiles and see if they are fully within the green tiles
         var permutations = redTiles.Count * (redTiles.Count - 1) / 2;
         var permutationCount = 0;
         var logFrequency = permutations / 100;
         logFrequency = Math.Max(logFrequency, 1); // To avoid divide by zero for small example input
         LogProgress($"There are {permutations:N0} possible rectangles");
+        
+        // We'll go through all possible rectangles formed by two red tiles and see if they are fully within the green tiles
         for (var a = 0; a < redTiles.Count; a++)
         {
             for (var b = a + 1; b < redTiles.Count; b++)
@@ -208,9 +174,9 @@ public class Puzzle09 : Puzzle<Point, long>
         LogProgress($"Finished processing {permutationCount:N0}/{permutations:N0} permutations");
         
         return maxArea;
-        // Solution time: 00:11:36.5046630
-        // Result is: [179674176]
-        // That's not the right answer; your answer is too low.
+        // Finished processing 122 760/122 760 permutations
+        // Solution time: 00:06:32.8642290
+        // Result is: [1 603 439 684]
         
         void PrintGreenTiles()
         {
