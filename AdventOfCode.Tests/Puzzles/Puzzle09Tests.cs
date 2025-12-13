@@ -22,7 +22,7 @@ public class Puzzle09Tests
     {
         _puzzle.IsRunningFromTest = true;
         var result = _puzzle.SolvePart2();
-        result.Should().BeGreaterThan(0);
+        result.Should().Be(1603439684);
     }
 
     [Fact]
