@@ -113,6 +113,21 @@ public abstract class Puzzle<TInput, TResult>(int id) : IPuzzle
 
     object IPuzzle.SolvePart2() => SolvePart2();
 
+    private Stopwatch _stopwatch = Stopwatch.StartNew();
+
+    protected bool _logProgress = false;
+    
+    protected void LogProgress(string message)
+    {
+        if (!_logProgress)
+        {
+            return;
+        }
+        
+        Console.WriteLine($"{DateTime.Now.TimeOfDay:hh\\:mm\\:ss} (+{_stopwatch.Elapsed:mm\\:ss\\.fff}): {message}");
+        _stopwatch.Restart();
+    }
+
     /// <summary>
     /// Will first try and solve part 2 of the puzzle. If part 2 isn't implemented,
     /// part 1 will be solved instead.

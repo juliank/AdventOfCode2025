@@ -221,7 +221,7 @@ public readonly record struct Point(int X, int Y, int Z = 0)
                 {
                     // On the next point of the ray trace we'll be leaving the polygon again
                     if ((polygon.Contains(northPoint) && enteredAtDownwardsAngle) ||
-                        (polygon.Contains(northPoint) && enteredAtUpwardsAngle))
+                        (polygon.Contains(southPoint) && enteredAtUpwardsAngle))
                     {
                         // Leaving at an "opposite" angle as the one we entered at means that
                         // we have crossed the polygon
